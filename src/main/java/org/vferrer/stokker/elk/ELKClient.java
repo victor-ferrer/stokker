@@ -21,7 +21,7 @@ public class ELKClient {
 
 	private DateTimeFormatter inputFormatter;
 
-	public final static String INDEX_NAME = "stockquotations4";
+	public final static String INDEX_NAME = "stockquotations";
 
 	private static final int STOCK_COLUMN = 0;
 	private static final int DATE_COLUMN = 1;

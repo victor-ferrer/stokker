@@ -3,12 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
 
 
-	<int:poller id="poller"  default="true" fixed-rate="30000"></int:poller>
+	<int:poller id="poller"  default="true" fixed-rate="300000"></int:poller>
 
 	
 	<int-http:outbound-gateway id="quotationsHttpGateway"
@@ -18,23 +20,31 @@
 		reply-timeout="5000" reply-channel="quotations.channel">
 	</int-http:outbound-gateway>
 	
-	<int:logging-channel-adapter channel="channel6"
-		log-full-message="true">
-	</int:logging-channel-adapter>
+
+	<int-file:inbound-channel-adapter id="historicalFilesIn" 
+    directory="classpath:/data" prevent-duplicates="true" channel="historical.channel">
+    	<int:poller fixed-rate="5000"></int:poller>
+    </int-file:inbound-channel-adapter>
+
+
+	
 	
 	<int:splitter input-channel="quotations.channel" output-channel="publish-subscribe-channel5" ref="CSVLineSplitter"></int:splitter>
 	
-	<int:inbound-channel-adapter channel="trigger.channel" expression="''">	</int:inbound-channel-adapter>
+	<int:inbound-channel-adapter channel="trigger.channel"
+		expression="''" id="httpIn">	</int:inbound-channel-adapter>
 	<int:channel id="quotations.channel"></int:channel>
 	<int:channel id="trigger.channel"></int:channel>
 	
 	<int:publish-subscribe-channel id="publish-subscribe-channel5"></int:publish-subscribe-channel>
 	<int:service-activator input-channel="publish-subscribe-channel5"
-		expression="@ELKClient.pushToELK(payload)" output-channel="channel6">
+		expression="@ELKClient.pushToELK(payload)" output-channel="nullChannel">
 	</int:service-activator>
-	<int:channel id="channel6"></int:channel>
+	
 	
 	<int:logging-channel-adapter channel="publish-subscribe-channel5"
 		log-full-message="true">
 	</int:logging-channel-adapter>
+	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
+	<int:channel id="historical.channel"></int:channel>
 </beans>
