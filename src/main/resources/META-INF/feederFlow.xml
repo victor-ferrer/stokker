@@ -25,9 +25,6 @@
     directory="classpath:/data" prevent-duplicates="true" channel="historical.channel">
     	<int:poller fixed-rate="5000"></int:poller>
     </int-file:inbound-channel-adapter>
-
-
-	
 	
 	<int:splitter input-channel="quotations.channel" output-channel="publish-subscribe-channel5" ref="CSVLineSplitter"></int:splitter>
 	
@@ -47,4 +44,5 @@
 	</int:logging-channel-adapter>
 	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
 	<int:channel id="historical.channel"></int:channel>
+	
 </beans>
