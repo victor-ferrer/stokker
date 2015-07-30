@@ -2,18 +2,25 @@ package org.vferrer.stokker.elk;
 
 import java.util.Calendar;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+@Entity
 @Document(indexName=ELKClient.INDEX_NAME)
 public class StockQuotation 
 {
+	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss"; 
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long  id;
 	
 	@Field (type = FieldType.String, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
@@ -22,7 +29,7 @@ public class StockQuotation
 	@Field(type=FieldType.Double, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
 	private Double value;
 	
-	@Field(type = FieldType.Date, format = DateFormat.custom, pattern ="dd-MM-yyyy HH:mm:ss", store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
+	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = DATE_FORMAT, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
 	private Calendar timestamp;
 	
 	public String getStock() {
@@ -48,6 +55,13 @@ public class StockQuotation
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("[%s]@%s (%s)", this.stock, this.value, this.timestamp.getTime().toString()); 
+		
 	}
 	
 }

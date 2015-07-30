@@ -38,7 +38,7 @@ public class CSVStockQuotationConverter implements IStockQuotationConverter<Stri
 		quotation.setValue(Double.parseDouble(chunks[PRICE_COLUMN].replaceAll("\"", "").replaceAll(",", ".") + "d"));
 		
 		DateTime time = DateTime.parse(chunks[DATE_COLUMN].replaceAll("\"", ""),inputFormatter);
-		Calendar calendar = new GregorianCalendar(time.getYear(), time.getMonthOfYear(), time.getDayOfMonth(), time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute());
+		Calendar calendar = new GregorianCalendar(time.getYear(), time.getMonthOfYear() -1, time.getDayOfMonth(), time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute());
 		quotation.setTimestamp(calendar);
 		
 		return quotation;

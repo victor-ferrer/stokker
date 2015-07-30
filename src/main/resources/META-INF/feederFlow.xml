@@ -12,7 +12,7 @@
 
 	<int:poller id="poller"  default="true" fixed-rate="300000"></int:poller>
 
-	
+	<!-- HTTP -->	
 	<int-http:outbound-gateway id="quotationsHttpGateway"
 		request-channel="trigger.channel"
 		url="https://docs.google.com/spreadsheets/d/16CrPHjsp8MBXfK8hEYsSDQHHHp_kFCi8vuidwTv02z0/pub?output=csv"
@@ -20,29 +20,40 @@
 		reply-timeout="5000" reply-channel="quotations.channel">
 	</int-http:outbound-gateway>
 	
-
+	<int:inbound-channel-adapter channel="trigger.channel"
+		expression="''" id="httpIn">	</int:inbound-channel-adapter>
+		
+	<!-- Input Files -->
 	<int-file:inbound-channel-adapter id="historicalFilesIn" 
     directory="classpath:/data" prevent-duplicates="true" channel="historical.channel">
     	<int:poller fixed-rate="5000"></int:poller>
     </int-file:inbound-channel-adapter>
 	
-	<int:splitter input-channel="quotations.channel" output-channel="publish-subscribe-channel5" ref="CSVLineSplitter"></int:splitter>
+	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
 	
-	<int:inbound-channel-adapter channel="trigger.channel"
-		expression="''" id="httpIn">	</int:inbound-channel-adapter>
-	<int:channel id="quotations.channel"></int:channel>
-	<int:channel id="trigger.channel"></int:channel>
+	<!-- Splitter, converter & publisher-->
+	<int:chain input-channel="quotations.channel" output-channel="quotationsPublishChannel">
+		<int:splitter ref="CSVLineSplitter" ></int:splitter>
+		<int:service-activator
+			expression="@CSVStockQuotationConverter.converToStockQuotation(payload)">
+		</int:service-activator>
+	</int:chain>
 	
-	<int:publish-subscribe-channel id="publish-subscribe-channel5"></int:publish-subscribe-channel>
-	<int:service-activator input-channel="publish-subscribe-channel5"
+	<int:publish-subscribe-channel id="quotationsPublishChannel"></int:publish-subscribe-channel>
+
+	<!--  Consumers -->	
+	<int:service-activator input-channel="quotationsPublishChannel"
 		expression="@ELKClient.pushToELK(payload)" output-channel="nullChannel">
 	</int:service-activator>
 	
-	
-	<int:logging-channel-adapter channel="publish-subscribe-channel5"
-		log-full-message="true">
+	<int:logging-channel-adapter channel="quotationsPublishChannel"
+		expression="payload">
 	</int:logging-channel-adapter>
-	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
+	
+	
+	<!-- Channels -->
+	<int:channel id="quotations.channel"></int:channel>
+	<int:channel id="trigger.channel"></int:channel>
 	<int:channel id="historical.channel"></int:channel>
 	
 </beans>

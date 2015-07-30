@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.stereotype.Component;
-import org.vferrer.stokker.elk.converter.IStockQuotationConverter;
+import org.vferrer.stokker.jpa.StockQuotationDatabaseRepository;
 
 @Component
 public class ELKClient {
@@ -21,7 +21,7 @@ public class ELKClient {
 	public final static String INDEX_NAME = "stockquotations";
 	
 	@Autowired	
-	private IStockQuotationConverter<String> stockConverter;
+	private StockQuotationDatabaseRepository stockRepo;
 	
 	@PostConstruct
 	public void initIndex()
@@ -36,11 +36,10 @@ public class ELKClient {
 		template.refresh(INDEX_NAME, true);
 	}
 	
-	public String pushToELK(String quotationCSV) throws Exception
+	public String pushToELK(StockQuotation quotation) throws Exception
 	{
-		// Convert our CSV to an entity valid for ES
-		StockQuotation quotation = stockConverter.converToStockQuotation(quotationCSV);
-			
+		stockRepo.save(quotation);	
+		
 		// Create the Query POJO targeting our index and with our CSV payload
 		IndexQuery query = new IndexQuery();
 		query.setIndexName(INDEX_NAME);
