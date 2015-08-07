@@ -14,7 +14,7 @@ import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Entity
-@Document(indexName=ELKClient.INDEX_NAME)
+@Document(indexName = "stockquotations")
 public class StockQuotation 
 {
 	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss"; 

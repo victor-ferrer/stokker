@@ -25,7 +25,7 @@
 		
 	<!-- Input Files -->
 	<int-file:inbound-channel-adapter id="historicalFilesIn" 
-    directory="classpath:/data" prevent-duplicates="true" channel="historical.channel">
+    directory="classpath:\data" prevent-duplicates="true" channel="historical.channel">
     	<int:poller fixed-rate="5000"></int:poller>
     </int-file:inbound-channel-adapter>
 	
