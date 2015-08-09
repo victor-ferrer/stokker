@@ -24,11 +24,12 @@
 		expression="''" id="httpIn">	</int:inbound-channel-adapter>
 		
 	<!-- Input Files -->
-	<int-file:inbound-channel-adapter id="historicalFilesIn" 
-    directory="classpath:\data" prevent-duplicates="true" channel="historical.channel">
+	<int-file:inbound-channel-adapter id="historicalFilesIn"
+		prevent-duplicates="true" channel="historical.channel"
+		directory="${historical.files.input.directory}">
     	<int:poller fixed-rate="5000"></int:poller>
     </int-file:inbound-channel-adapter>
-	
+
 	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
 	
 	<!-- Splitter, converter & publisher-->
