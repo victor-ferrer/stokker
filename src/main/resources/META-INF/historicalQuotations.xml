@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<int-http:outbound-gateway id="historicalQuotationsHttpGateway"
+		url="http://ichart.finance.yahoo.com/table.csv?s={ticker}&amp;a={startmonth}&amp;b={startday}&amp;c={startyear}&amp;g=ds"
+		http-method="GET" expected-response-type="java.lang.String" charset="UTF-8"
+		reply-timeout="5000" reply-channel="historical.raw.quotations.channel" request-channel="historical.trigger.split.channel">
+		  <int-http:uri-variable name="ticker" expression="headers.get('ticker')"/>
+		  <int-http:uri-variable name="startday" expression="${stokker.historicaldata.start.day}"/>
+		  <int-http:uri-variable name="startmonth" expression="${stokker.historicaldata.start.month}"/>
+		  <int-http:uri-variable name="startyear" expression="${stokker.historicaldata.start.year}"/>
+	</int-http:outbound-gateway>
+	
+	<bean id="historicalCSVSplitter" class="org.vferrer.stokker.feeder.csv.HistoricalCSVLineSplitter" />
+	<int:chain input-channel="historical.raw.quotations.channel" output-channel="quotationsPublishChannel">
+		<!-- FIXME This should be unified with the other CSV splitter with a flag to ignore the header -->
+		<int:splitter ref="historicalCSVSplitter" ></int:splitter>
+		<int:service-activator
+			expression="@CSVStockQuotationConverter.convertHistoricalCSVToStockQuotation(headers.get('ticker'),payload)">
+		</int:service-activator>
+	</int:chain>
+	
+	<!-- Channels -->
+	<int:channel id="historical.trigger.channel" />
+	<int:channel id="historical.raw.quotations.channel"></int:channel>
+	<int:channel id="historical.trigger.split.channel"></int:channel>
+
+	<int:channel id="controlbus.channel"></int:channel>
+	<int:control-bus input-channel="controlbus.channel"
+		id="controlBus">
+	</int:control-bus>
+</beans>

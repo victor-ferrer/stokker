@@ -5,9 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.stereotype.Component;
-import org.vferrer.stokker.jpa.StockQuotationDatabaseRepository;
 
 @Component
 public class ELKClient {
@@ -21,7 +19,7 @@ public class ELKClient {
 	public String indexName;
 	
 	@Autowired	
-	private StockQuotationDatabaseRepository stockRepo;
+	private StockQuotationElasticSearchRepository stockRepo;
 	
 	@PostConstruct
 	public void initIndex()
@@ -40,11 +38,6 @@ public class ELKClient {
 	{
 		stockRepo.save(quotation);	
 		
-		// Create the Query POJO targeting our index and with our CSV payload
-		IndexQuery query = new IndexQuery();
-		query.setIndexName(indexName);
-		query.setObject(quotation);
-			
-		return template.index(query);
+		return "OK";
 	}
 }

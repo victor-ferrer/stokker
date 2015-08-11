@@ -2,7 +2,6 @@ package org.vferrer.stokker.elk;
 
 import java.util.Calendar;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +12,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Entity
 @Document(indexName = "stockquotations")
 public class StockQuotation 
 {
@@ -63,5 +61,6 @@ public class StockQuotation
 		return String.format("[%s]@%s (%s)", this.stock, this.value, this.timestamp.getTime().toString()); 
 		
 	}
-	
+
+
 }

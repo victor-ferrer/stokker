@@ -10,36 +10,6 @@
 		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
 
 
-	<int:poller id="poller"  default="true" fixed-rate="300000"></int:poller>
-
-	<!-- HTTP -->	
-	<int-http:outbound-gateway id="quotationsHttpGateway"
-		request-channel="trigger.channel"
-		url="https://docs.google.com/spreadsheets/d/16CrPHjsp8MBXfK8hEYsSDQHHHp_kFCi8vuidwTv02z0/pub?output=csv"
-		http-method="GET" expected-response-type="java.lang.String" charset="UTF-8"
-		reply-timeout="5000" reply-channel="quotations.channel">
-	</int-http:outbound-gateway>
-	
-	<int:inbound-channel-adapter channel="trigger.channel"
-		expression="''" id="httpIn">	</int:inbound-channel-adapter>
-		
-	<!-- Input Files -->
-	<int-file:inbound-channel-adapter id="historicalFilesIn"
-		prevent-duplicates="true" channel="historical.channel"
-		directory="${historical.files.input.directory}">
-    	<int:poller fixed-rate="5000"></int:poller>
-    </int-file:inbound-channel-adapter>
-
-	<int-file:file-to-string-transformer input-channel="historical.channel" output-channel="quotations.channel"/>
-	
-	<!-- Splitter, converter & publisher-->
-	<int:chain input-channel="quotations.channel" output-channel="quotationsPublishChannel">
-		<int:splitter ref="CSVLineSplitter" ></int:splitter>
-		<int:service-activator
-			expression="@CSVStockQuotationConverter.converToStockQuotation(payload)">
-		</int:service-activator>
-	</int:chain>
-	
 	<int:publish-subscribe-channel id="quotationsPublishChannel"></int:publish-subscribe-channel>
 
 	<!--  Consumers -->	
@@ -53,8 +23,12 @@
 	
 	
 	<!-- Channels -->
-	<int:channel id="quotations.channel"></int:channel>
-	<int:channel id="trigger.channel"></int:channel>
-	<int:channel id="historical.channel"></int:channel>
+	
+	
+	
+	
+	
+
+	
 	
 </beans>

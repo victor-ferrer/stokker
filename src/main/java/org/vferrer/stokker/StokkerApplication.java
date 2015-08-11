@@ -6,23 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
-@Controller
 @SpringBootApplication
-@ImportResource("classpath:/META-INF/feederFlow.xml")
+@ImportResource(value = {"classpath:/META-INF/feederFlow.xml","classpath:/META-INF/historicalQuotations.xml","classpath:/META-INF/liveQuotations.xml"})
+@EnableElasticsearchRepositories(basePackages = "org/vferrer/stokker/elk")
 public class StokkerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StokkerApplication.class, args);
     }
-    
-    @RequestMapping("/")
-    public String home() {
-    	return "Hello World";
-    }
-
     
     /**
      * Instantiates and registers the servlet required for running the H2 database console

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<int:poller id="poller"  default="true" fixed-rate="300000" ></int:poller>
+
+	<!-- Live HTTP Quotations -->	
+	<int-http:outbound-gateway id="livequotationsHttpGateway"
+		request-channel="trigger.channel"
+		url="https://docs.google.com/spreadsheets/d/16CrPHjsp8MBXfK8hEYsSDQHHHp_kFCi8vuidwTv02z0/pub?output=csv"
+		http-method="GET" expected-response-type="java.lang.String" charset="UTF-8"
+		reply-timeout="5000" reply-channel="quotations.channel">
+	</int-http:outbound-gateway>
+	
+	<int:inbound-channel-adapter channel="trigger.channel"
+		expression="''" id="httpIn">	</int:inbound-channel-adapter>
+		
+		
+	<!-- Live quotations Splitter, converter & publisher-->
+	<int:chain input-channel="quotations.channel" output-channel="quotationsPublishChannel">
+		<int:splitter ref="CSVLineSplitter"></int:splitter>
+		<int:service-activator
+			expression="@CSVStockQuotationConverter.convertLiveCSVToStockQuotation(payload)">
+		</int:service-activator>
+	</int:chain>
+	
+	
+
+	
+	<!-- Channels -->
+	<int:channel id="quotations.channel"></int:channel>
+	<int:channel id="trigger.channel"></int:channel>
+	
+	
+	
+
+	
+	
+</beans>
