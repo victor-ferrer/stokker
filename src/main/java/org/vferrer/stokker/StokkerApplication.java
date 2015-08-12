@@ -1,10 +1,7 @@
 package org.vferrer.stokker;
 
-import org.h2.server.web.WebServlet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
@@ -16,16 +13,4 @@ public class StokkerApplication {
     public static void main(String[] args) {
         SpringApplication.run(StokkerApplication.class, args);
     }
-    
-    /**
-     * Instantiates and registers the servlet required for running the H2 database console
-     * @return
-     */
-    @Bean
-    public ServletRegistrationBean h2servletRegistration(){
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
-        registrationBean.addUrlMappings("/h2console/*");
-        return registrationBean;
-    }
-    
 }
