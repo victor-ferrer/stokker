@@ -42,9 +42,12 @@ public class HistoricalCSVRequestCreator implements ApplicationListener {
 			System.out.println("Building request for tickers: " + tickersConfig);
 			
 			for (String ticker : tickers) {
-				MessageBuilder<String> builder = MessageBuilder.withPayload("");
-				builder.setHeaderIfAbsent("ticker", ticker);
-				channel.send(builder.build());
+				
+				if (!ticker.trim().isEmpty()){
+					MessageBuilder<String> builder = MessageBuilder.withPayload("");
+					builder.setHeaderIfAbsent("ticker", ticker.trim());
+					channel.send(builder.build());
+				}
 			}
 		}
 	}

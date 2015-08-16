@@ -21,14 +21,16 @@
 	</int-http:outbound-gateway>
 	
 	<bean id="historicalCSVSplitter" class="org.vferrer.stokker.feeder.csv.HistoricalCSVLineSplitter" />
-	<int:chain input-channel="historical.raw.quotations.channel" output-channel="quotationsPublishChannel">
+	<int:chain input-channel="historical.raw.quotations.channel"
+		output-channel="quotationsPublishChannel">
 		<!-- FIXME This should be unified with the other CSV splitter with a flag to ignore the header -->
 		<int:splitter ref="historicalCSVSplitter" ></int:splitter>
 		<int:service-activator
 			expression="@CSVStockQuotationConverter.convertHistoricalCSVToStockQuotation(headers.get('ticker'),payload)">
 		</int:service-activator>
+		<int:aggregator></int:aggregator>
 	</int:chain>
-	
+
 	<!-- Channels -->
 	<int:channel id="historical.trigger.channel" />
 	<int:channel id="historical.raw.quotations.channel"></int:channel>
