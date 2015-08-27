@@ -18,6 +18,7 @@ public class StockQuotation
 	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss"; 
 	
 	@Id
+	@Field
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long  id;
 	
@@ -29,6 +30,19 @@ public class StockQuotation
 	
 	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = DATE_FORMAT, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
 	private Calendar timestamp;
+	
+	@Field(type=FieldType.Double, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
+	private Double openValue;
+	
+	@Field(type=FieldType.Double, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
+	private Double highValue;
+	
+	@Field(type=FieldType.Double, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
+	private Double lowValue;
+	
+	@Field(type=FieldType.Double, store = true, index = FieldIndex.analyzed, searchAnalyzer = "standard", indexAnalyzer = "standard")
+	private Double volume;
+	
 	
 	public String getStock() {
 		return stock;
@@ -54,6 +68,39 @@ public class StockQuotation
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Double getOpenValue() {
+		return openValue;
+	}
+
+	public void setOpenValue(Double openValue) {
+		this.openValue = openValue;
+	}
+
+	public Double getHighValue() {
+		return highValue;
+	}
+
+	public void setHighValue(Double highValue) {
+		this.highValue = highValue;
+	}
+
+	public Double getLowValue() {
+		return lowValue;
+	}
+
+	public void setLowValue(Double lowValue) {
+		this.lowValue = lowValue;
+	}
+
+	public Double getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Double volume) {
+		this.volume = volume;
+	}
+
 	
 	@Override
 	public String toString()

@@ -5,13 +5,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.elasticsearch.index.query.TermFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -42,11 +39,21 @@ public class ELKClient {
 		
 	}
 	
+	/**
+	 * Indexes a single StockQuotation
+	 * @param quotation
+	 * @throws Exception
+	 */
 	public void pushToELK(StockQuotation quotation) throws Exception
 	{
 		stockRepo.save(quotation);	
 	}
 
+	/**
+	 * Bulk indexing of a list of stock quotations for better performance
+	 * @param quotationList
+	 * @throws Exception
+	 */
 	public void pushToELK(List<StockQuotation> quotationList) throws Exception
 	{
 		List<IndexQuery> queries = new ArrayList<>();
@@ -62,21 +69,4 @@ public class ELKClient {
 		template.bulkIndex(queries);
 	}
 
-	
-	
-	public List<StockQuotation> search(String stockName) {
-		
-		NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
-		
-		TermFilterBuilder filterBuilder = new TermFilterBuilder("stock", stockName);
-		
-		SearchQuery searchQuery = builder.withIndices(indexName)
-										 .withFields("stock","value","timestamp")
-										 .withFilter(filterBuilder)
-										 .build();
-		
-		List<StockQuotation> quotationsList = template.queryForList(searchQuery, StockQuotation.class);
-		
-		return quotationsList;
-	}
 }
