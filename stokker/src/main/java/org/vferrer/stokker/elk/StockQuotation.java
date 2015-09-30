@@ -105,9 +105,7 @@ public class StockQuotation
 	@Override
 	public String toString()
 	{
-		return String.format("[%s]@%s (%s)", this.stock, this.value, this.timestamp.getTime().toString()); 
-		
+		return String.format("[%s]@%s (%s) H(%s)/L(%s)/O(%s)", this.stock, this.value, this.timestamp.getTime().toString(), this.highValue, this.lowValue,this.openValue); 
 	}
-
 
 }
