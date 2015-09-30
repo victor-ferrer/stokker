@@ -1,4 +1,4 @@
-# Stokker - A stock screener based on Spring-Boot/Integration + Elastic Search
+# Stokker - Stock screener based on Spring-Boot/Integration + Elastic Search
 
 ## Summary
 
@@ -15,7 +15,10 @@ By "stock quotations", I mean:
 
 
 Desired functionality
-- Be able to perform some studies in the indexed data in ES (specially, I´m waiting for some ES 2.0 features such as the moving average).
+- Be able to perform some studies in the indexed data in ES (specially, I´m waiting for some ES 2.0 features such as the moving average). This is a sample dashboard created with the information stored in ES:
+
+![Sample Kibana Dashboard](https://raw.githubusercontent.com/victor-ferrer/stokker/master/sample%20dashboard.PNG)
+
 - Use the module "Watcher" in order to define several types of alerts based on market conditions.
 - Give the user a GUI, if possible, integrated with some Kibana dashboard.
 - Assess whether some Portfolio management functionality would be interesting.
