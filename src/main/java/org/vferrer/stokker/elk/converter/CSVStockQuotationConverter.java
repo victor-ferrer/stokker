@@ -3,9 +3,9 @@ package org.vferrer.stokker.elk.converter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.elasticsearch.common.joda.time.DateTime;
-import org.elasticsearch.common.joda.time.format.DateTimeFormatter;
-import org.elasticsearch.common.joda.time.format.DateTimeFormatterBuilder;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.stereotype.Component;
 import org.vferrer.stokker.elk.StockQuotation;
 

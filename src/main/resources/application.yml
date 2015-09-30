@@ -1,0 +1,11 @@
+server:
+  port: 8989
+---
+spring:
+   profiles: default
+---
+spring:
+   profiles: remote-es-node
+   data:
+       elasticsearch:
+           cluster-nodes: localhost:9300
