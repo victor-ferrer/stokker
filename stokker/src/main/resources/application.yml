@@ -8,4 +8,4 @@ spring:
    profiles: remote-es-node
    data:
        elasticsearch:
-           cluster-nodes: 192.168.59.103:32773 
+           cluster-nodes: localhost:9300 

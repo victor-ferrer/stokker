@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public interface StockQuotationRepository extends ElasticsearchRepository<StockQuotation, Long>
 {
 	
-	public List<StockQuotation> findQuotationsByStock(String stock);
-	
+	public List<StockQuotation> findByStock(String stock);
 
+	
 }
