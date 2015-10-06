@@ -16,5 +16,7 @@ public class PortfolioManagerApplication {
 	public ServletRegistrationBean servletRegistrationBean(){
 	    return new ServletRegistrationBean(new  org.h2.server.web.WebServlet(),"/h2console/**");
 	}
+
+
 	
 }
