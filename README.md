@@ -21,12 +21,13 @@ Desired functionality
 
 - Use the module "Watcher" in order to define several types of alerts based on market conditions.
 - Give the user a GUI, if possible, integrated with some Kibana dashboard.
-- Assess whether some Portfolio management functionality would be interesting.
+- Provide a tool for managing stock porfolios (using the Stokker service as source of price information)
 
 On technical side:
 - The latest Spring Boot version is to be used
 - Application contains a DockerFile and can create an Docker image from it:
 -- This image can be associated with another images running more ElasticSearch nodes and the Kibana server
+- Introduce OAuth2 as authentication system
 
  
 ## How to use it
