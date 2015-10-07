@@ -21,24 +21,17 @@ Desired functionality
 
 - Use the module "Watcher" in order to define several types of alerts based on market conditions.
 - Give the user a GUI, if possible, integrated with some Kibana dashboard.
-- Assess whether some Portfolio management functionality would be interesting.
+- Provide a tool for managing stock porfolios (using the Stokker service as source of price information)
 
 On technical side:
 - The latest Spring Boot version is to be used
 - Application contains a DockerFile and can create an Docker image from it:
 -- This image can be associated with another images running more ElasticSearch nodes and the Kibana server
+- Introduce OAuth2 as authentication system
 
  
 ## How to use it
-You can either:
-- Run mvn spring-boot:run from the projectroot directory, or
-- Run java -jar <jar_file_name.jar> from the /target directory
-
-In either case, the application will launch a local elasticsearch node where data will be indexed. If you want to use Kibana, you will have to launch it manually and set it up to use http://localhost:9200 
-
-There are two profiles that can be triggered using spring.profiles.active
-- default (or not setting anything): The elastic search node is embedded in the Stokker Java VM
-- remote-es-node: The elastic search node is an external one running in an IP:PORT to be established by using the property spring.data.elasticsearch.cluster-nodes: [IP]:[PORT]
+Check [this Wiki Page](https://github.com/victor-ferrer/stokker/wiki/How-to-run-the-Stokker-services) on how to run the project and its related tools.
 
 ## Pending improvements
 - Improve error reporting
