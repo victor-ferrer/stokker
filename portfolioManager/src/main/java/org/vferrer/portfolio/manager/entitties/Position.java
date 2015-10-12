@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  * Represents a trade done on a stock 
@@ -25,7 +24,6 @@ public class Position
 	@Column(name="position_id")
 	private Long id;
 
-	// TODO this should be extracted to a FK -> Stock
 	@Column
 	private Double amount;
 	

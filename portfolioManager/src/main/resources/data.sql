@@ -15,3 +15,11 @@ insert into stock (stock_id, ticker, market, need_market_suffix, label, currency
 insert into stock (stock_id, ticker, market, need_market_suffix, label, currency) values (13, 'BME', 'MC', 1, 'Bolsas y Mercados', 'EUR');
 insert into stock (stock_id, ticker, market, need_market_suffix, label, currency) values (14, 'ACS', 'MC', 1, 'ACS Contrucciones', 'EUR');
 
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (1, 1550, 3.6, '2015-04-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (2, 1550, 3.37, '2015-05-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (3, 1550, 3.23, '2015-06-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (4, 1550, 3.2, '2015-07-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (5, 1550, 3.0, '2015-08-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (6, 1550, 2.92, '2015-09-01', 1, 1);
+insert into position (position_id, amount, price, trade_date, stock_id, portfolio_id) values (7, 1550, 2.56, '2015-10-01', 1, 1);
+

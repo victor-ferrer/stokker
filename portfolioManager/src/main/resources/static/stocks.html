@@ -1,0 +1,23 @@
+
+<div ng-show="authenticated">
+	<div ng-controller="stocksController" ng-cloak class="ng-cloak">
+
+		<h1>List of managed Stocks</h1>
+		<table ng-table="vm.tableParams" class="table" show-filter="true">
+			<tr>
+				<th>Ticker</th>
+				<th>Market</th>
+				<th>Company</th>
+			</tr>
+
+			<tr ng-repeat="stock in stocks">
+				<td>{{stock.ticker}}</td>
+				<td>{{stock.market}}</td>
+				<td>{{stock.label}}</td>
+			</tr>
+		</table>
+
+	</div>
+
+	<div ng-show="!authenticated">Please log-in in order to see the
+		list of managed stocks</div>
