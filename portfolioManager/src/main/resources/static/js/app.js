@@ -10,6 +10,12 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 	}).when('/stocks', {
 		templateUrl : 'stocks.html',
 		controller : 'stocksController'
+	}).when('/portfolio_detail', {
+		templateUrl : 'portfolio_detail.html',
+		controller : 'portfolioController'
+	}).when('/stock_detail', {
+		templateUrl : 'stock_detail.html',
+		controller : 'stocksController'
 	})
 	.otherwise('/');
 
@@ -17,12 +23,22 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 
 })
 .controller('home', function($scope, $http) {
-	  $http.get('/stocks/').success(function(data) {
-		    $scope.stocks = data._embedded.stocks;
-		  });
+	  
+	  $http.get('/portfolios/').success(function(data) {
+		    $scope.portfolios = data._embedded.portfolios;
+		  })
+})
+.controller('portfolioController', function($scope, $http) {
 	  
 	  $http.get('/positions/').success(function(data) {
 		    $scope.positions = data._embedded.positions;
+		    
+		    angular.forEach($scope.positions, function(position) {
+		    	  $http.get(position._links.stock.href).success(function(stockdata){
+		    		  position.stock = stockdata;
+		    	  })
+		    });
+		    
 		  })
 })
 .controller('stocksController', function($scope, $http) {

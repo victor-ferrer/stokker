@@ -2,27 +2,27 @@
 <div ng-show="authenticated">
 	<div ng-controller="home" ng-cloak class="ng-cloak">
 
-		<h1>List of managed Market Positions</h1>
+		<h1>List of managed Portfolios</h1>
 
 		<table ng-table="vm.tableParams" class="table" show-filter="true">
 			<tr>
-				<th>TODO: Get the Stock info from here:</th>
-				<th>Amount</th>
-				<th>Open Price</th>
+				<th>Portfolio Name</th>
+				<th>Incorporation date</th>
 				<th>Investment</th>
-				<th>Close Price</th>
-				<th>Earnings/losses</th>
-				<th>Trade Date</th>
+				<th>Valuation</th>
+				<th>Yield</th>
+				<th>Currency</th>
+				<th></th>
 			</tr>
 
-			<tr ng-repeat="position in positions">
-				<td>{{position._links.stock}}</td>
-				<td>{{position.amount}}</td>
-				<td>{{position.price}}</td>
-				<td>{{position.amount * position.price}}</td>
-				<td> 3.00</td>
-				<th> {{(3 - position.price) * position.amount | number}} </th>
-				<td>{{position.tradeDate | date}}</td>
+			<tr ng-repeat="portfolio in portfolios">
+				<td>{{portfolio.label}}</td>
+				<td>{{portfolio.incorporationDate | date}}</td>
+				<td>TODO</td>
+				<td>TODO</td>
+				<td>TODO</td>
+				<td>{{portfolio.currency}}</td>
+				<td><a href="#/portfolio_detail">Details</a></td>
 			</tr>
 		</table>
 	</div>

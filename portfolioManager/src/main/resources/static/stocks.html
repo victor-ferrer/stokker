@@ -1,4 +1,3 @@
-
 <div ng-show="authenticated">
 	<div ng-controller="stocksController" ng-cloak class="ng-cloak">
 
@@ -11,7 +10,7 @@
 			</tr>
 
 			<tr ng-repeat="stock in stocks">
-				<td>{{stock.ticker}}</td>
+				<td><a href="#/stock_detail">{{stock.ticker}}</a></td>
 				<td>{{stock.market}}</td>
 				<td>{{stock.label}}</td>
 			</tr>
