@@ -2,22 +2,29 @@
 	<div ng-controller="stocksController" ng-cloak class="ng-cloak">
 
 		<h2>Stock Report</h2>
+		
+		<select ng-options="stock.ticker as stock.label for stock in stocks" ng-model="selected"></select>
+		
 		<table ng-table="vm.tableParams" class="table" show-filter="true">
 			<tr>
 				<th>Ticker</th>
 				<th>Market</th>
 				<th>Company</th>
+				<th>Needs market suffix</th>
 			</tr>
 
 			<tr>
 				<td>{{stocks[0].ticker}}</td>
 				<td>{{stocks[0].market}}</td>
 				<td>{{stocks[0].label}}</td>
+				<td>{{stocks[0].needMarketSuffix}}</td>
 			</tr>
 		</table>
 		
-		<iframe src="http://192.168.59.103:5601/#/dashboard/Sample-dashboard?embed&_g=(refreshInterval:(display:On,pause:!f,section:0,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),panels:!((col:1,id:Stock-Values,row:1,size_x:10,size_y:4,type:visualization),(col:1,id:Stock-volume,row:5,size_x:10,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'stock%20%3D%20!'MAP.MC!'')),title:'Sample%20dashboard')" height="600" width="800"></iframe>
+		Enter your query here:  <input ng-model="query"> <button ng-click="refreshIframe()">Refresh visualization</button>
+		<br />
 		
+		<iframe ng-src="{{dahsboardURL}}" height="800" width="800"> </iframe>
 		
 
 	</div>

@@ -41,10 +41,19 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 		    
 		  })
 })
-.controller('stocksController', function($scope, $http) {
+.controller('stocksController', function($scope, $http, $sce){
 	  $http.get('/stocks/').success(function(data) {
 		    $scope.stocks = data._embedded.stocks;
-		  })
+		  });
+
+	  $scope.query = 'MAP.MC';
+	  $scope.dahsboardURL = $sce.trustAsResourceUrl("http://192.168.59.103:5601/#/dashboard/Full_dashboard?embed&_g=(refreshInterval:(display:Off,pause:!f,section:0,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),panels:!((col:1,id:Stock-Values,row:1,size_x:9,size_y:6,type:visualization),(col:1,id:Stock-volume,row:7,size_x:9,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'" + $scope.query + "')),title:Full_dashboard)");
+	  
+	  $scope.refreshIframe = function() {
+		  $scope.dahsboardURL = $sce.trustAsResourceUrl("http://192.168.59.103:5601/#/dashboard/Full_dashboard?embed&_g=(refreshInterval:(display:Off,pause:!f,section:0,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),panels:!((col:1,id:Stock-Values,row:1,size_x:9,size_y:6,type:visualization),(col:1,id:Stock-volume,row:7,size_x:9,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'" + $scope.query + "')),title:Full_dashboard)");
+		}
+		  
+		  
 })
 .controller('navigation',
 
