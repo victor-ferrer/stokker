@@ -15,12 +15,15 @@
 				<th>Trade Date</th>
 			</tr>
 
+	
+
 			<tr ng-repeat="position in positions">
-				<td><a href="#/stock_detail">{{position.stock.ticker}}</a></td>
+			
+				<td><a href="#/stock_detail?stockInfo={{position.stock._links.self.href}}">{{position.stock.ticker}}</a></td>
 				<td>{{position.amount}}</td>
 				<td>{{position.price | currency:"EUR":2}}</td>
-				<td>{{position.amount * position.price | number}}</td>
-				<td> {{position.currentPrice | number : 2}}</td>
+				<td>{{position.amount * position.price |  currency:"EUR":2}}</td>
+				<td> {{position.currentPrice |  currency:"EUR":2}}</td>
 				<th> {{(position.currentPrice - position.price) * position.amount | number}} </td>
 				<td>{{position.tradeDate | date}}</td>
 			</tr>
