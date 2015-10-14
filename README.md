@@ -6,6 +6,8 @@ This a personal learning project whose functionality, for the moment, is to:
 - Gather historical stock quotations from Yahoo Finance 
 - Gather "live" stock quotations from Google Finance
 - Index everything in a Elasticsearch node so queries, graphs and alarms can be generated.
+- Provide an AngularJS web interface wrapping the Kibana dashboards.
+- Provide portfolio management functionalities using the Stock prices stored in ES.
 
 By "stock quotations", I mean:
 - High, low, open and close values (daily values)
@@ -15,13 +17,12 @@ By "stock quotations", I mean:
 
 
 Desired functionality
-- Be able to perform some studies in the indexed data in ES (specially, I´m waiting for some ES 2.0 features such as the moving average). This is a sample dashboard created with the information stored in ES:
+- Be able to perform some studies in the indexed data in ES (specially, I´m waiting for some ES 2.0 features such as the moving average). This is a sample dashboard created with the information stored in ES and embedded in the AngularJS interface:
 
 ![Sample Kibana Dashboard](https://raw.githubusercontent.com/victor-ferrer/stokker/master/sample%20dashboard.PNG)
 
 - Use the module "Watcher" in order to define several types of alerts based on market conditions.
-- Give the user a GUI, if possible, integrated with some Kibana dashboard.
-- Provide a tool for managing stock porfolios (using the Stokker service as source of price information)
+
 
 On technical side:
 - The latest Spring Boot version is to be used
