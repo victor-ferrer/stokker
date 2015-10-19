@@ -1,0 +1,29 @@
+<div ng-controller="portfolioController" ng-cloak class="ng-cloak">
+	<div ng-show="authenticated">
+
+	<h1>List of managed Portfolios</h1>
+
+	<table ng-table="vm.tableParams" class="table" show-filter="true">
+		<tr>
+			<th>Portfolio Name</th>
+			<th>Incorporation date</th>
+			<th>Investment</th>
+			<th>Valuation</th>
+			<th>Yield</th>
+			<th>Currency</th>
+			<th></th>
+		</tr>
+
+		<tr ng-repeat="portfolio in portfolios">
+			<td>{{portfolio.label}}</td>
+			<td>{{portfolio.incorporationDate | date}}</td>
+			<td>TODO</td>
+			<td>TODO</td>
+			<td>TODO</td>
+			<td>{{portfolio.currency}}</td>
+			<td><a href="#/portfolio_detail">Details</a></td>
+		</tr>
+	</table>
+	
+	</div>
+</div>

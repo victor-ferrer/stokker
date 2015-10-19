@@ -1,10 +1,10 @@
-<div ng-show="authenticated">
 	<div ng-controller="stocksController" ng-cloak class="ng-cloak">
 
+		<div ng-show="authenticated">
 		<h2>Stock Report</h2>
 		
-		<p>Select the Managed Stock to be visualized: <select ng-options="stock as stock.label for stock in stocks" ng-model="targetStock" ng-change="updateIframe()"></select></p>
-		<p>Select the time-frame: <select ng-options="timeframe as timeframe.label for timeframe in timeframes" ng-model="targetTimeFrame" ng-change="updateIframe()"></select></p>
+		<p>Select Stock: <select ng-options="stock as stock.label for stock in stocks" ng-model="targetStock" ng-change="updateIframe()"></select>
+		Select the time-frame: <select ng-options="timeframe as timeframe.label for timeframe in timeframes" ng-model="targetTimeFrame" ng-change="updateIframe()"></select></p>
 		
 		<table ng-table="vm.tableParams" class="table" show-filter="true">
 			<tr>
@@ -25,6 +25,6 @@
 		<br /> 
 		<iframe id="kibanaIframe" refreshable="tab.refresh" ng-src="{{dahsboardURL}}" height="600" width="850"> </iframe>
 
+		</div>
 	</div>
 
-<div ng-show="!authenticated">Please log-in using the tab above</div>

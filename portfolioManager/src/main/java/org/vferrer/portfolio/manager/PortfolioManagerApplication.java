@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.security.oauth2.sso.EnableOAuth2Sso;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,13 +21,14 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @SpringBootApplication
 @RestController
-@EnableOAuth2Sso
+@RequestMapping("/portfoliomanager")
 public class PortfolioManagerApplication {
 
     public static void main(String[] args) {
@@ -46,21 +47,30 @@ public class PortfolioManagerApplication {
       return user;
     }
 	
+	@Controller
+	public static class LoginErrors {
+
+		@RequestMapping("/portfoliomanager/login")
+		public String dashboard() {
+			return "redirect:/#/";
+		}
+
+	}
     
-    
-    @Configuration
+	@Component
+	@EnableOAuth2Sso
     protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter     {
 
-    	@Override
+		@Override
 		public void configure(HttpSecurity http) throws Exception {
-				http.antMatcher("/portfolios/**").authorizeRequests().anyRequest().authenticated().and()
-					.csrf()
+			http.antMatcher("/portfoliomanager/**").authorizeRequests()
+					.antMatchers(actuatorEndpoints()).hasRole("ADMIN")
+					.anyRequest().authenticated().and().csrf()
 					.csrfTokenRepository(csrfTokenRepository()).and()
 					.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-					.logout().logoutUrl("/logout").permitAll()
+					.logout().logoutUrl("/portfoliomanager/logout").permitAll()
 					.logoutSuccessUrl("/");
 		}
-    	
 		private Filter csrfHeaderFilter() {
 			return new OncePerRequestFilter() {
 				@Override
@@ -85,6 +95,10 @@ public class PortfolioManagerApplication {
 			repository.setHeaderName("X-XSRF-TOKEN");
 			return repository;
 		}
+		
+	    private String[] actuatorEndpoints() {
+	        return new String[]{"mappings"};
+	    }
     	
     }
 

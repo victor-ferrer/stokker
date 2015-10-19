@@ -1,31 +1,33 @@
+<h1>Wellcome to Stokker - Portfolio Manager </h1>
 
-<div ng-show="authenticated">
-	<div ng-controller="home" ng-cloak class="ng-cloak">
+<div ng-show="!authenticated">
+	<strong>Please <a href="/portfoliomanager/login">log in using your GitHub account</a> to access the application.</strong>
+	<br/><br/>
+</div>
 
-		<h1>List of managed Portfolios</h1>
 
-		<table ng-table="vm.tableParams" class="table" show-filter="true">
-			<tr>
-				<th>Portfolio Name</th>
-				<th>Incorporation date</th>
-				<th>Investment</th>
-				<th>Valuation</th>
-				<th>Yield</th>
-				<th>Currency</th>
-				<th></th>
-			</tr>
+<p> This is a small personal learning project that intends offer some Portfolio Management functionality as well as some Stock price analysis.</p>
+<ul>
+	<li>You have more information about the project in the <a href="https://github.com/victor-ferrer/stokker/wiki">wiki</a> along with instructions on how to lunch all the services.</li>
+</ul>
+<p> Technology stack </p>
+<ul>
+	<li>AngularJS in the front-end.</li>
+	<li>Spring Boot 1.3.0 in the Server Side.</li>
+	<li>JPA (H2) and ElasticSearch as data persistence layer.</li>
+	<li>Kibana helps with the data visualization.
+	<li>Some Docker containers are used to launch the services. 	
+</ul>
 
-			<tr ng-repeat="portfolio in portfolios">
-				<td>{{portfolio.label}}</td>
-				<td>{{portfolio.incorporationDate | date}}</td>
-				<td>TODO</td>
-				<td>TODO</td>
-				<td>TODO</td>
-				<td>{{portfolio.currency}}</td>
-				<td><a href="#/portfolio_detail">Details</a></td>
-			</tr>
-		</table>
-	</div>
+<p> The source code is available <a href="https://github.com/victor-ferrer/stokker">in this GitHub repository.</a><p>
+<ul>
+	<li>Feel free to fork it, however I am still cleaning up things (like the commit policy, there is neither CI nor automatic testing - for the moment)</li>
+	<li>My objective is to turn this sandbox repository in something closer to an open-source project</li>
+</ul>
+<p> You can follow the development of this project in my blog (<a href="http://victorferrerjava.blogspot.com">http://victorferrerjava.blogspot.com.es/</a>) along with some other software-related articles.</p>
+<p> Regards,</p>
+<p> Victor</p>
+<a href="http://stackoverflow.com/users/3046834/victor">
+<img src="http://stackoverflow.com/users/flair/3046834.png" width="208" height="58" alt="profile for Victor at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Victor at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+</a>
 
-	<div ng-show="!authenticated">Please log-in in order to see the
-		list of managed stocks</div>

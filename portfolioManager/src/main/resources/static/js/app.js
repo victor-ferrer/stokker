@@ -3,13 +3,16 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 
 	$routeProvider.when('/', {
 		templateUrl : 'home.html',
-		controller : 'home'
+		controller : 'navigation'
 	}).when('/stocks', {
 		templateUrl : 'stocks.html',
 		controller : 'stocksController'
+	}).when('/portfolio_list', {
+		templateUrl : 'portfolio_list.html',
+		controller : 'portfolioController'
 	}).when('/portfolio_detail', {
 		templateUrl : 'portfolio_detail.html',
-		controller : 'portfolioController'
+		controller : 'portfolioDetailController'
 	}).when('/stock_detail', {
 		templateUrl : 'stock_detail.html',
 		controller : 'stocksController'
@@ -19,15 +22,41 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
   $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
 })
-.controller('home', function($scope, $http) {
-	  
-	  $http.get('/portfolios/').success(function(data) {
-		    $scope.portfolios = data._embedded.portfolios;
-		  })
+.controller('navigation',
+
+  function($rootScope, $scope, $http, $location, $window) {
+
+	$scope.tab = function(route) {
+		return $route.current && route === $route.current.controller;
+	};
+	if (!$scope.user) {
+		$http.get('/portfoliomanager/user').success(function(data) {
+			$scope.user = data;
+			$rootScope.authenticated = true;
+		}).error(function() {
+			$rootScope.authenticated = false;
+		});
+	}
+	$scope.logout = function() {
+		$http.post('/portfoliomanager/logout', {}).success(function() {
+			delete $scope.user;
+			$rootScope.authenticated = false;
+			// Force reload of home page to reset all state after logout
+			$window.location.hash = '';
+		});
+	};
+
 })
+.controller('home', function() {})
 .controller('portfolioController', function($scope, $http) {
 	  
-	  $http.get('/positions/').success(function(data) {
+	  $http.get('/portfolios').success(function(data) {
+		    $scope.portfolios = data._embedded.portfolios;
+	  })
+})
+.controller('portfolioDetailController', function($scope, $http) {
+	  
+	  $http.get('positions').success(function(data) {
 		    $scope.positions = data._embedded.positions;
 		    
 		    angular.forEach($scope.positions, function(position) {
@@ -40,7 +69,7 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 		  })
 })
 .controller('stocksController', function($scope, $http, $sce, $document, $routeParams){
-	  $http.get('/stocks/').success(function(data) {
+	  $http.get('stocks').success(function(data) {
 		    $scope.stocks = data._embedded.stocks;
 		  });
 
@@ -84,38 +113,6 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 	  
 	  
 		  
-})
-.controller('navigation',
-
-  function($rootScope, $scope, $http, $location) {
-
-
-
-	$http.get('/user').success(function(data) {
-		if (data.name) {
-			$rootScope.authenticated = true;
-		} else {
-			$rootScope.authenticated = false;
-		}
-	}).error(function() {
-		$rootScope.authenticated = false;
-	});
-
-
-
-  $scope.credentials = {};
-
-	
-   $scope.logout = function() {
-		$http.post('/logout', {}).success(function() {
-			$rootScope.authenticated = false;
-			$location.path("/");
-		}).error(function(data) {
-			console.log("Logout failed")
-			$rootScope.authenticated = false;
-		});
-	}
-
 })
 .directive('refreshable', [function () {
     return {
