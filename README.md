@@ -30,6 +30,15 @@ On technical side:
 -- This image can be associated with another images running more ElasticSearch nodes and the Kibana server
 - Introduce OAuth2 as authentication system
 
+This is how the deployment looks like:
+
+![Deployment diagram](https://raw.githubusercontent.com/victor-ferrer/stokker/master/deployment_model.PNG)
+ 
+ - Stokker will read the stock information from the Web and will index it in an ElasticSearch cluster.
+ - The ElasticSearch cluster will be deployed either in its own Docker container or along with the Stokker JVM.
+ - Another Docker container will host Kibana
+ - Portfolio manager will host a local database with stock portolios, whose valuations will be calculated based on what is stored in the ES cluster.
+ - An AngularJS web interface will be shown to the user combining data from the local database and ES.
  
 ## How to use it
 Check [this Wiki Page](https://github.com/victor-ferrer/stokker/wiki/How-to-run-the-Stokker-services) on how to run the project and its related tools.
