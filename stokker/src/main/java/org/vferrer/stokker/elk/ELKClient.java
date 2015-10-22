@@ -109,7 +109,7 @@ public class ELKClient {
     	}
   	}
 	 * */
-	public Double getAvgPriceByStockAndDate(String stock, DateTime date)
+	public Double getAvgPriceByStockAndDate(String stock, final DateTime date)
 	{
 		MatchQueryBuilder queryBuilder = new MatchQueryBuilder("stock", stock);
 		
