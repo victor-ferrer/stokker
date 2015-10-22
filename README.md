@@ -1,4 +1,4 @@
-# Stokker - Stock screener based on Spring-Boot/Integration + Elastic Search
+# Stokker - Stock screener based on Spring-Boot/Integration + Elastic Search ![Travis CI Build status](https://travis-ci.org/victor-ferrer/stokker.svg?branch=master)
 
 ## Summary
 
