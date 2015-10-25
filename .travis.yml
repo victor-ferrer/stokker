@@ -2,4 +2,4 @@ language: java
 deploy:
 	provider: heroku
 	api-key: acf393bc-f94f-4124-8d19-a2101c1acfe2
-	run: "java -jar ./stokker/target/stokker-0.0.1-SNAPSHOT.jar"
+
