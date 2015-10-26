@@ -37,12 +37,19 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 			$rootScope.authenticated = false;
 		});
 	}
+	
+	$scope.login = function() {
+		alert($window.location);
+		$window.location.href= "/portfoliomanager/login?redirect_uri=" + $window.location;
+		
+	};
+	
 	$scope.logout = function() {
 		$http.post('/portfoliomanager/logout', {}).success(function() {
 			delete $scope.user;
 			$rootScope.authenticated = false;
 			// Force reload of home page to reset all state after logout
-			$window.location.hash = '';
+			$window.location = '/';
 		});
 	};
 

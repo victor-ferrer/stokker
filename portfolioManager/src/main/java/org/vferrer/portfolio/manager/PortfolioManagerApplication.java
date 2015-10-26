@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -40,8 +39,6 @@ public class PortfolioManagerApplication {
 //	    return new ServletRegistrationBean(new  org.h2.server.web.WebServlet(),"/h2console/**");
 //	}
 
-    // TODO This is used for the makeshift login form authentication and should be replaced
-    // by the OAuth2 tokens
     @RequestMapping("/user")
     public Principal user(Principal user) {
       return user;
