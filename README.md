@@ -45,6 +45,13 @@ This is how the deployment looks like:
 ## How to use it
 Check [this Wiki Page](https://github.com/victor-ferrer/stokker/wiki/How-to-run-the-Stokker-services) on how to run the project and its related tools.
 
+## Running example
+There is a running instance of the application deployed in Heroku: https://stokker.herokuapp.com/#/
+
+My intention is that everytime that a succesfull CI build is finished, a new version is deployed to Heroku.
+
+**Please note that the Kibana functionality is not yet working in this environment.**
+
 ## Pending improvements
 - Improve error reporting
 - Provide a GUI with embedded Kibana visualizations
