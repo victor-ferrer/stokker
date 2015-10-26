@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar portfolioManager/target/*.jar  
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar portfolioManager/target/*.jar  
