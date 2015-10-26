@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar stokker/target/*.jar  
+web: java $JAVA_OPTS -jar portfolioManager/target/*.jar  
