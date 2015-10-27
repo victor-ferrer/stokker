@@ -39,8 +39,7 @@ angular.module('portfolio_manager', [ 'ngRoute' ])
 	}
 	
 	$scope.login = function() {
-		alert($window.location);
-		$window.location.href= "/portfoliomanager/login?redirect_uri=" + $window.location;
+		$window.location.href= "/portfoliomanager/login";
 		
 	};
 	

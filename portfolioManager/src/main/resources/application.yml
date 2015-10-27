@@ -45,7 +45,21 @@ security:
 
 ---
 spring:
-  profiles: github
+  profiles: github_local
+security:
+  oauth2:
+    client:
+      clientId: 66591dd6252b020a4f8e
+      clientSecret: f65273520b393b7cbd26646de5ddd4f00bd35450
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user
+      preferTokenInfo: false
+---
+spring:
+  profiles: github_heroku
 security:
   oauth2:
     client:
@@ -58,4 +72,5 @@ security:
       userInfoUri: https://api.github.com/user
       preferTokenInfo: false
 
+    
     
