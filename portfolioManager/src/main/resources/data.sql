@@ -1,4 +1,7 @@
-insert into portfolio (portfolio_id, label, incorporation_date, currency) values (1, 'Dividend portfolio', '2015-04-01','EUR');
+insert into registered_user (user_id, login) values (1, 'victor-ferrer');
+insert into registered_user (user_id, login) values (2, 'guest');
+
+insert into portfolio (portfolio_id, label, incorporation_date, currency, owner_id) values (1, 'Dividend portfolio', '2015-04-01','EUR', 1);
 
 insert into stock (stock_id, ticker, market, need_market_suffix, label, currency) values (1, 'MAP', 'MC', 1, 'Mapfre seguros', 'EUR');
 insert into stock (stock_id, ticker, market, need_market_suffix, label, currency) values (2, 'SAN', 'MC', 1, 'Banco Santander', 'EUR');

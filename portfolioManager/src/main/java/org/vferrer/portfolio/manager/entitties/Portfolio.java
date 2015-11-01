@@ -10,7 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.vferrer.portfolio.manager.entitties.security.RegisteredUser;
 
 @Entity
 public class Portfolio  
@@ -32,6 +36,11 @@ public class Portfolio
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portfolio")
 	private Set<Position> positions;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "owner_id", nullable = false)
+	private RegisteredUser owner;
+
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,5 +80,13 @@ public class Portfolio
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
-	
+
+	public RegisteredUser getOwner() {
+		return owner;
+	}
+
+	public void setOwner(RegisteredUser owner) {
+		this.owner = owner;
+	}
+
 }
