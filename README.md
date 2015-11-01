@@ -2,6 +2,9 @@
 
 [![Travis CI Status](https://travis-ci.org/victor-ferrer/stokker.svg?branch=master)](https://travis-ci.org/victor-ferrer/stokker)
 
+*NOTE*: The source code corresponding to the Portfolio Manager has been moved to its own repository: https://github.com/victor-ferrer/stokker-portfolio-manager
+
+
 ## Summary
 
 This a personal learning project whose functionality, for the moment, is to:
@@ -46,7 +49,7 @@ This is how the deployment looks like:
 Check [this Wiki Page](https://github.com/victor-ferrer/stokker/wiki/How-to-run-the-Stokker-services) on how to run the project and its related tools.
 
 ## Running example
-There is a running instance of the application deployed in Heroku: https://stokker.herokuapp.com/#/
+There is a running instance of the application deployed in Heroku: https://stokker-portfolio-manager.herokuapp.com
 
 My intention is that everytime that a succesfull CI build is finished, a new version is deployed to Heroku.
 
