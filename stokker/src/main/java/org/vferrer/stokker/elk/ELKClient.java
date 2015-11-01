@@ -36,6 +36,9 @@ public class ELKClient {
 	@Autowired	
 	private StockQuotationRepository stockRepo;
 	
+	@Autowired
+	private StockQuotationJPARepository stockJPARepo;
+	
 	@PostConstruct
 	public void initIndex()
 	{
@@ -57,6 +60,9 @@ public class ELKClient {
 	 */
 	public void pushToELK(StockQuotation quotation) throws Exception
 	{
+		// Temporary store quotations in H2 until rest for ES works
+		stockJPARepo.save(StockQuotationJPA.fromElasticSearchStockQuotation(quotation));
+		
 		stockRepo.save(quotation);	
 	}
 
@@ -75,6 +81,9 @@ public class ELKClient {
 			indexQuery.setIndexName(indexName);
 			indexQuery.setObject(quotation);
 			queries.add(indexQuery);
+			
+			// Temporary store quotations in H2 until rest for ES works			
+			stockJPARepo.save(StockQuotationJPA.fromElasticSearchStockQuotation(quotation));
 		}
 		
 		template.bulkIndex(queries);
