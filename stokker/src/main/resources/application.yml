@@ -1,11 +1,19 @@
+spring:
+    application:
+      name: Stokker
 server:
-  port: 8989
+  port: 8989  
 ---
+
 spring:
    profiles: default
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8080/eureka/
 ---
 spring:
    profiles: remote-es-node
    data:
        elasticsearch:
-           cluster-nodes: localhost:9300 
+           cluster-nodes: localhost:9300
