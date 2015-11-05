@@ -1,6 +1,6 @@
 before_script:
  - "echo $JAVA_OPTS"
- - "export JAVA_OPTS=-Xmx512m -XX:PermSize=256m"
+ - "export JAVA_OPTS=-XX:PermSize=256m"
 language: java
 deploy:
    provider: heroku
