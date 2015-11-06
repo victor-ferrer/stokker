@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar stokker/target/*.jar  -Dspring.profiles.active=heroku
+web: java $JAVA_OPTS -Dserver.port=$PORT  -Dspring.profiles.active=heroku -jar stokker/target/*.jar 
