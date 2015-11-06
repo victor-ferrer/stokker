@@ -17,3 +17,10 @@ spring:
    data:
        elasticsearch:
            cluster-nodes: localhost:9300
+---
+spring:
+   profiles: heroku
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: https://stokker-portfolio-manager.herokuapp.com/eureka/           
