@@ -13,4 +13,5 @@ public interface StockQuotationJPARepository extends PagingAndSortingRepository<
 	public List<StockQuotationJPA> findValueByStock(@Param("ticker") String ticker);
 
 	
+	public StockQuotationJPA findTopByStockOrderByTimestampDesc(@Param("ticker") String ticker);
 }
