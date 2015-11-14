@@ -3,14 +3,16 @@ spring:
       name: stokker
 server:
   port: 8989  
+
 ---
 
 spring:
    profiles: default
 eureka:
+    password: user
     client:
         serviceUrl:
-            defaultZone: http://localhost:9999/eureka/
+            defaultZone: http://user:${eureka.password}@localhost:9999/eureka/
 ---
 spring:
    profiles: remote-es-node
@@ -21,6 +23,7 @@ spring:
 spring:
    profiles: heroku
 eureka:
+    password: user
     client:
         serviceUrl:
-            defaultZone: https://stokker-portfolio-manager.herokuapp.com/eureka/           
+            defaultZone: https://user:${eureka.password}@stokker-portfolio-manager.herokuapp.com/eureka/           
