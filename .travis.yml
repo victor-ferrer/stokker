@@ -3,6 +3,8 @@ before_script:
  - "export JAVA_OPTS=-Xmx512m"
  - "export JAVA_OPTS=-XX:PermSize=256m"
 language: java
+jdk:
+  - oraclejdk8
 deploy:
    provider: heroku
    api-key: acf393bc-f94f-4124-8d19-a2101c1acfe2
